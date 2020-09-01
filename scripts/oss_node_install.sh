@@ -7,6 +7,7 @@ log_file="/logs/phase3-`date +'%Y-%m-%d_%H-%M-%S'`.log"
 set -x
 exec 1>> $log_file 2>&1
 index_value=`facter index_value`
+mgt_vm_name=`facter mgt_vm_name`
 
 echo "Installing dependency packages"
 yum install asciidoc audit-libs-devel automake bc binutils-devel bison device-mapper-devel elfutils-devel elfutils-libelf-devel expect flex gcc gcc-c++ git glib2 glib2-devel hmaccalc keyutils-libs-devel krb5-devel ksh libattr-devel libblkid-devel libselinux-devel libtool libuuid-devel libyaml-devel lsscsi make ncurses-devel net-snmp-devel net-tools newt-devel numactl-devel parted patchutils pciutils-devel perl-ExtUtils-Embed pesign python-devel redhat-rpm-config rpm-build systemd-devel tcl tcl-devel tk tk-devel wget xmlto yum-utils zlib-devel -y
@@ -80,7 +81,7 @@ mountpoint=`hostname`
 #mountpoint=`echo $mount | sed "s/$const/oss/g"`
 
 mdadm -C /dev/md0 --level=raid0 --raid-devices=10 /dev/disk/azure/scsi1/lun[0-9]
-mkfs.lustre --fsname lustre --ost --mgsnode=mgt@tcp --index=$index_value /dev/md0
+mkfs.lustre --fsname lustre --ost --mgsnode=$mgt_vm_name@tcp --index=$index_value /dev/md0
 mkdir -p /opt/$mountpoint
 mount.lustre /dev/md0 /opt/$mountpoint
 

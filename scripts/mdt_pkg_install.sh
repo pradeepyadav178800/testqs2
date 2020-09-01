@@ -7,7 +7,7 @@ set -x
 exec 1>> $log_file 2>&1
 
 ##Global Variables
-lustremgt=`facter lustremgt` ##To be passed as variable
+mgt_vm_name=`facter mgt_vm_name` ##To be passed as variable
 
 echo "Installing dependency packages"
 yum install asciidoc audit-libs-devel automake bc binutils-devel bison device-mapper-devel elfutils-devel elfutils-libelf-devel expect flex gcc gcc-c++ git glib2 glib2-devel hmaccalc keyutils-libs-devel krb5-devel ksh libattr-devel libblkid-devel libselinux-devel libtool libuuid-devel libyaml-devel lsscsi make ncurses-devel net-snmp-devel net-tools newt-devel numactl-devel parted patchutils pciutils-devel perl-ExtUtils-Embed pesign python-devel redhat-rpm-config rpm-build systemd-devel tcl tcl-devel tk tk-devel wget xmlto yum-utils zlib-devel -y
@@ -78,7 +78,7 @@ echo "Formating file system and mounting "
 modprobe lnet
 lctl network configure
 lun0=`ls -l /dev/disk/azure/scsi1/lun0 | awk '{print $NF}' | cut -d '/' -f4`
-mkfs.lustre --fsname=lustre --mgsnode=mgt@tcp --mdt --index=0 /dev/$lun0 ####Need dynamic variable hostname or IP address
+mkfs.lustre --fsname=lustre --mgsnode=$mgt_vm_name@tcp --mdt --index=0 /dev/$lun0 ####Need dynamic variable hostname or IP address
 mkdir /opt/mdt
 mount.lustre /dev/$lun0 /opt/mdt/
 if [ $? -eq 0 ] 

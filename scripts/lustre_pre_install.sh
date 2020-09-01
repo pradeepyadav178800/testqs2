@@ -58,6 +58,17 @@ else
    exit 1
 fi
 
+##Facter Variables and Declaration
+environmentLocation="/etc/facter/facts.d/variables.txt"
+if [ -f $environmentLocation ]; then
+	rm -f $environmentLocation
+fi
+
+cat << EOF > $environmentLocation
+index_value=$1
+mgt_vm_name=$2
+EOF
+
 ## Creating the repo configuration for dowloading all the rpm packages based on the server version
 cat >/tmp/lustre-repo.conf <<\__EOF
 [lustre-server]
