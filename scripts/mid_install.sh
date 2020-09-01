@@ -76,8 +76,7 @@ sasintpw=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault
 fail_if_error $? "Error: Key vault access failed"
 sasextpw=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 fail_if_error $? "Error: Key vault access failed"
-echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
-fail_if_error $? "Error: Key vault access failed"
+
 
 ## Creating sas group
 cat /etc/group |grep -wiq sas
