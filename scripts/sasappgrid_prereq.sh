@@ -43,6 +43,7 @@ lsf_sid=${17}
 store_key=${18}
 sas_role=${19}
 artifact_loc=${20}
+grid_nodes=${21}
 mid_hostname=${1}${12}
 meta_hostname=${1}${13}
 grid_hostname=${1}${14}
@@ -209,7 +210,6 @@ if [ $sas_role == "grid" ] || [ $sas_role == "gridnode" ]; then
    lsblk |grep -w /saswork
    if [ $? -eq 0 ]; then
       chmod 777 /saswork
-      chown sasinst:sas /saswork
       echo "SASWork has been located and mounted on /saswork successfully."
    else
       echo "ERROR: Failed to mount SASWork volume from Instance Store."

@@ -29,6 +29,7 @@ LSFInstallLoc="$SASInstallLoc/platform/lsf"
 PMInstallLoc="$SASInstallLoc/platform/pm"
 
 ### Lustre client installation 
+sleep 180
 echo "Installing kernel package"
 VER="3.10.0-1062.9.1.el7"
 yum install kernel-$VER kernel-devel-$VER kernel-headers-$VER kernel-abi-whitelists-$VER kernel-tools-$VER kernel-tools-libs-$VER kernel-tools-libs-devel-$VER -y
