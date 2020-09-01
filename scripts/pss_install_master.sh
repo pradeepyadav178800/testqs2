@@ -27,6 +27,9 @@ lsf_install_config_url=${artifact_loc}conf/lsf_install.config
 GridInstallTempLoc="$SASInstallLoc/platform/tmp"
 LSFInstallLoc="$SASInstallLoc/platform/lsf"
 PMInstallLoc="$SASInstallLoc/platform/pm"
+key_vault_name=`facter key_vault_name`
+sasint_secret_name=`facter sasint_secret_name`
+sasext_secret_name=`facter sasext_secret_name`
 
 # Getting the password
 az login --identity
