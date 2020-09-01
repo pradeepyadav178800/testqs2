@@ -102,7 +102,7 @@ if [ $? -eq 0 ]; then
         if [ -d $sas_local_dir/config ]; then
             chown sasinst:sas $sas_local_dir/config
         else
-            mkdir -p $sas_local_dirconfig
+            mkdir -p $sas_local_dir/config
             chown sasinst:sas $sas_local_dir/config
         fi
         chown sasinst:sas $sas_local_dir -R
@@ -127,7 +127,7 @@ sed -i "s/domain_name/${domain_name}/g" $res_dir/*.properties
 sed -i "s/host_name/${meta_host}/g" $res_dir/*.properties
 sed -i "s/mid_host/${mid_host}/g" $res_dir/*.properties
 sed -i "s|sas_plan_file_path|/opt/sas/resources/plan.xml|g" $res_dir/*.properties
-sed -i "s|sas_license_file_path/sid_files/|/opt/sas/resources/${sas_sid}|g" $res_dir/*.properties
+sed -i "s|sas_license_file_path|/opt/sas/resources/${sas_sid}|g" $res_dir/*.properties
 
 
 #SAS Installation

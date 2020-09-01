@@ -123,14 +123,22 @@ if [ $? -eq 0 ]; then
 		mount /dev/disk/azure/scsi1/lun0 $sas_local_dir
 		fail_if_error $? "Error:Failed to mount $sas_local_dir"
 		echo "Disk for $sas_local_dir located and mounted."
-      if [ -d $sas_local_dir/sashome ]; then
-         chown sasinst:sas $sas_local_dir/sashome
-      else
-         mkdir -p $sas_local_dir/sashome
-         chown sasinst:sas $sas_local_dir/sashome
-      fi
-      chown sasinst:sas $sas_local_dir -R
-	fi
+		## Adding Fstab Entries
+		echo "/dev/disk/azure/scsi1/lun0  $sas_local_dir   xfs       defaults        0 0"  >> /etc/fstab
+        if [ -d $sas_local_dir/sashome ]; then
+            chown sasinst:sas $sas_local_dir/sashome
+        else
+            mkdir -p $sas_local_dir/sashome
+            chown sasinst:sas $sas_local_dir/sashome
+        fi
+        if [ -d $sas_local_dir/config ]; then
+            chown sasinst:sas $sas_local_dir/config
+        else
+            mkdir -p $sas_local_dir/config
+            chown sasinst:sas $sas_local_dir/config
+        fi
+        chown sasinst:sas $sas_local_dir -R
+	   fi
 else
 	   echo "ERROR: $sas_local_dir disk(lun0) is not available."
 	   exit 1
