@@ -28,6 +28,38 @@ GridInstallTempLoc="$SASInstallLoc/platform/tmp"
 LSFInstallLoc="$SASInstallLoc/platform/lsf"
 PMInstallLoc="$SASInstallLoc/platform/pm"
 
+# Getting the password
+az login --identity
+fail_if_error $? "Error: AZ login failed"
+sasintpw=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
+fail_if_error $? "Error: Key vault access failed"
+sasextpw=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
+fail_if_error $? "Error: Key vault access failed"
+
+## Creating sas group
+cat /etc/group |grep -wiq sas
+if [ $? -eq 0 ]; then
+   echo "SAS Group exists"
+else
+   groupadd -g 5001 sas
+   fail_if_error $? "ERROR: Failed to create sas group"
+fi
+
+## Creating SAS internal Users
+username=("sasinst" "sassrv" "sasdemo" "lsfadmin")
+userid=("1002" "1003" "1005" "1006")
+for ((i=0;i<${#username[@]};++i));
+do
+    if [ ! -f /home/${username[$i]} ]; then
+        useradd -u ${userid[$i]} -g sas ${username[$i]}
+        fail_if_error $? "ERROR: failed to create ${username[$i]} User"
+        echo ${sasextpw} | passwd ${username[$i]} --stdin
+    else 
+        echo "User ${username[$i]} exists"
+    fi
+done
+
+
 ### Lustre client installation 
 sleep 180
 echo "Installing kernel package"
@@ -106,36 +138,6 @@ else
 fi
 chown sasinst:sas $sas_lustre_dir -R
 
-# Getting the password
-az login --identity
-fail_if_error $? "Error: AZ login failed"
-sasintpw=`az keyvault secret show -n $sasint_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
-fail_if_error $? "Error: Key vault access failed"
-sasextpw=`az keyvault secret show -n $sasext_secret_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
-fail_if_error $? "Error: Key vault access failed"
-
-## Creating sas group
-cat /etc/group |grep -wiq sas
-if [ $? -eq 0 ]; then
-   echo "SAS Group exists"
-else
-   groupadd -g 5001 sas
-   fail_if_error $? "ERROR: Failed to create sas group"
-fi
-
-## Creating SAS internal Users
-username=("sasinst" "sassrv" "sasdemo" "lsfadmin")
-userid=("1002" "1003" "1005" "1006")
-for ((i=0;i<${#username[@]};++i));
-do
-    if [ ! -f /home/${username[$i]} ]; then
-        useradd -u ${userid[$i]} -g sas ${username[$i]}
-        fail_if_error $? "ERROR: failed to create ${username[$i]} User"
-        echo ${sasextpw} | passwd ${username[$i]} --stdin
-    else 
-        echo "User ${username[$i]} exists"
-    fi
-done
 
 #Downloading the lsf_install.config file
 wget -P $res_dir $lsf_install_config_url
