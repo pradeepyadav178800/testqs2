@@ -158,6 +158,9 @@ do
 /opt/sas/viya/home/bin/sas-bootstrap-config --token-file /opt/sas/viya/config/etc/SASSecurityCertificateFramework/tokens/consul/default/client.token kv write config/launcher-server/global/environment/SASHOMEDIRPERMS 0700
 EOF
 done
-echo "#DATA#"
 echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+sasboot=`ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
+echo "{'SAS_BOOT': '$sasboot'}" > /var/log/sas/install/sasboot.log
+echo "#SASBOOT#"
+cat /var/log/sas/install/sasboot.log
 fi
