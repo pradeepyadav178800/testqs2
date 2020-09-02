@@ -30,7 +30,7 @@ sed -i "s|certname|${app_name}|g" ${res_dir}/ssl_cert.properties
 
 
 #Add certificate to trustedstore
-su - sasinst -c "time /usr/local/sashome/SASDeploymentManager/9.4/sasdm.sh -deploy -responsefile ${cert_prop} -lang en -loglevel 2 -templocation /opt/sas/temp -quiet"
+su - sasinst -c "time /usr/local/sashome/SASDeploymentManager/9.4/sasdm.sh -deploy -responsefile ${cert_prop} -lang en -loglevel 2 -templocation /var/temp -quiet"
 fail_if_error $? "ERROR: SAS certificate update failed. Please check logs"
 
 
