@@ -165,12 +165,13 @@ else
    sed -i "s/gridnodes/$gridhostname/g" $sas_resource_dir/lsf_install.config
 fi
 
-cp $sas_resource_dir/lsf_install.config $GridInstallTempLoc/$PMInstallTemp/install.config
+
 mkdir -p $GridInstallTempLoc $LSFInstallLoc $PMInstallLoc
 cp /sasdepot/$SASSoftwareDepo/third_party/Platform_Process_Manager/*/Linux_for_x64/*.tar $GridInstallTempLoc
 cp /sasdepot/$SASSoftwareDepo/third_party/Platform_Grid_Management_Service/*/Linux_for_x64/gms*.tar.Z $GridInstallTempLoc
 PMInstallTemp=`tar xvf $GridInstallTempLoc/*.tar -C $GridInstallTempLoc | tail -n 1 | cut -d '/' -f 2`
 cp /sasdepot/$SASSoftwareDepo/sid_files/$lsf_sid $GridInstallTempLoc/$PMInstallTemp/license.dat
+cp $sas_resource_dir/lsf_install.config $GridInstallTempLoc/$PMInstallTemp/install.config
 
 
 #LSF and PM install on Master only
