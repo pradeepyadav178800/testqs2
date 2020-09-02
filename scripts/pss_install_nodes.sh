@@ -10,6 +10,29 @@ fail_if_error() {
   }
 }
 
+## Creating sas group
+cat /etc/group |grep -wiq sas
+if [ $? -eq 0 ]; then
+   echo "SAS Group exists"
+else
+   groupadd -g 5001 sas
+   fail_if_error $? "ERROR: Failed to create sas group"
+fi
+
+## Creating SAS internal Users
+username=("sasinst" "sassrv" "sasdemo" "lsfadmin")
+userid=("1002" "1003" "1005" "1006")
+for ((i=0;i<${#username[@]};++i));
+do
+    if [ ! -f /home/${username[$i]} ]; then
+        useradd -u ${userid[$i]} -g sas ${username[$i]}
+        fail_if_error $? "ERROR: failed to create ${username[$i]} User"
+        echo ${sasextpw} | passwd ${username[$i]} --stdin
+    else 
+        echo "User ${username[$i]} exists"
+    fi
+done
+
 ### Lustre client installation 
 echo "Installing kernel package"
 VER="3.10.0-1062.9.1.el7"
