@@ -65,8 +65,8 @@ if [ -f $environmentLocation ]; then
 fi
 
 cat << EOF > $environmentLocation
-index_value=$1
-mgt_vm_name=$2
+mgt_vm_name=$1
+index_value=$2
 EOF
 
 ## Creating the repo configuration for dowloading all the rpm packages based on the server version
