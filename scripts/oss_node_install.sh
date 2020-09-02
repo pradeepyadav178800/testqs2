@@ -92,5 +92,6 @@ else
 echo "ERROR: failed to mount lustre file system."
 exit 1
 fi
-lctl set_param obdfilter.*.readcache_max_filesize=2M
+#lctl set_param obdfilter.*.readcache_max_filesize=2M
+lctl set_param osd-ldiskfs.*.readcache_max_filesize=2M
 echo "*** Phase 3 - Luster OSS Install Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
