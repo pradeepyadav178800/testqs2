@@ -83,7 +83,8 @@ sasint_secret_name=`facter sasint_secret_name`
 sasext_secret_name=`facter sasext_secret_name`
 sas_lustre_dir="/opt/sas"  
 sas_local_dir="/usr/local"
-sas_resource_dir="/opt/sas/resources" 
+sas_resource_dir="/opt/sas/resources"
+pub_keyname=`facter pub_keyname`
 
 ## Stop & Disable the firewalld(Iptables)
 systemctl stop firewalld
