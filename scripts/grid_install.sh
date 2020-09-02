@@ -75,7 +75,7 @@ else
 	   exit 1
 fi
 
-cp -rv /sasdepot/${depot_loc}/sid_files/${sas_sid} /opt/sas/resources/
+cp -rv /sasdepot/${depot_loc}/sid_files/${grid_sid} /opt/sas/resources/
 
 if [ ! -d $res_dir ]; then
     mkdir -p $res_dir
