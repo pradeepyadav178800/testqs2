@@ -30,6 +30,15 @@ wget -P $res_dir $ssl_prop_url
 ##Altering the certificate in property file
 sed -i "s|certname|${app_name}|g" ${res_dir}/ssl_cert.properties
 
+## Password Update
+encsasextpw=$(</root/encext.txt)
+sed -i "s/changeextpass/${encsasextpw}/g" $res_dir/*.properties
+echo "Encrypted password has been updated successfully."
+encsasintpw=$(</root/encint.txt)
+sed -i "s/changeintpass/${encsasintpw}/g" $res_dir/*.properties
+echo "Encrypted password has been updated succesfully."
+rm -f /root/enc*.txt
+
 #Add certificate to trustedstore
 su - sasinst -c "time /opt/sas/grid/sashome/SASDeploymentManager/9.4/sasdm.sh -deploy -responsefile ${cert_prop} -lang en -loglevel 2 -templocation /var/temp -quiet"
 fail_if_error $? "ERROR: SAS certificate update failed. Please check logs"
