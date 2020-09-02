@@ -143,18 +143,18 @@ chown sasinst:sas $sas_lustre_dir -R
 
 
 #Downloading the lsf_install.config file
-wget -P $res_dir $lsf_install_config_url
+wget -P $sas_resource_dir $lsf_install_config_url
 
-sed -i "s/domain_name/${Domain}/g" $res_dir/lsf_install.config
-sed -i "s/grid_host/$grid_hostname/g" $res_dir/lsf_install.config
-sed -i "s/mid_host/$mid_hostname/g" $res_dir/lsf_install.config
-sed -i "s|pminstallloc|$PMInstallLoc|g" $res_dir/lsf_install.config
-sed -i "s|lsfinstallloc|$LSFInstallLoc|g" $res_dir/lsf_install.config
+sed -i "s/domain_name/${Domain}/g" $sas_resource_dir/lsf_install.config
+sed -i "s/grid_host/$grid_hostname/g" $sas_resource_dir/lsf_install.config
+sed -i "s/mid_host/$mid_hostname/g" $sas_resource_dir/lsf_install.config
+sed -i "s|pminstallloc|$PMInstallLoc|g" $sas_resource_dir/lsf_install.config
+sed -i "s|lsfinstallloc|$LSFInstallLoc|g" $sas_resource_dir/lsf_install.config
 
 i=1
 gridhostname=""
 if [ $count == 0 ]; then
-   sed -i "s/gridnodes//g" $res_dir/lsf_install.config
+   sed -i "s/gridnodes//g" $sas_resource_dir/lsf_install.config
 else
    while [ "$count" != "0" ] ; do
       #echo grid0$i.$Domain
@@ -162,10 +162,10 @@ else
       i=$(($i+1))
       count=$(($count-1))
    done
-   sed -i "s/gridnodes/$gridhostname/g" $res_dir/lsf_install.config
+   sed -i "s/gridnodes/$gridhostname/g" $sas_resource_dir/lsf_install.config
 fi
 
-cp $res_dir/lsf_install.config $GridInstallTempLoc/$PMInstallTemp/install.config
+cp $sas_resource_dir/lsf_install.config $GridInstallTempLoc/$PMInstallTemp/install.config
 mkdir -p $GridInstallTempLoc $LSFInstallLoc $PMInstallLoc
 cp /sasdepot/$SASSoftwareDepo/third_party/Platform_Process_Manager/*/Linux_for_x64/*.tar $GridInstallTempLoc
 cp /sasdepot/$SASSoftwareDepo/third_party/Platform_Grid_Management_Service/*/Linux_for_x64/gms*.tar.Z $GridInstallTempLoc
