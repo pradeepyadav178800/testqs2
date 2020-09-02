@@ -16,6 +16,7 @@ app_name=`facter application_name`
 sas_role=`facter sas_role`   
 domain_name=`facter domain_name`
 res_dir="/opt/sas/resources/responsefiles"
+artifact_loc=`facter artifact_loc`
 ssl_prop_url=${artifact_loc}properties/ssl_cert.properties
 plan_file_url=${artifact_loc}properties/plan.xml
 gridinstall_url=${artifact_loc}properties/grid_install.properties
