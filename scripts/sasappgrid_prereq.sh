@@ -254,10 +254,4 @@ else
    fail_if_error $? "ERROR: Failed to mount Azure file share"
 fi
 
-# Pulling public key for passwordless SSH
-az login --identity
-fail_if_error $? "Error: AZ login failed"
-echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
-fail_if_error $? "Error: Key vault access failed"
-
 echo "*** Phase 3 - Pre-req Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
