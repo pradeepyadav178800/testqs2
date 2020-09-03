@@ -52,9 +52,6 @@ if [ -f ${conf_prop} ]; then
          echo "SAS Grid Server Configuration has been completed succesfully."
          sed -i "s|-WORK /tmp|-WORK /saswork|g" /opt/sas/grid/sashome/SASFoundation/9.4/sasv9.cfg
          chmod 777 /saswork -R
-         /opt/sas/grid/config/Lev1/ObjectSpawner/ObjectSpawner.sh stop
-         sleep 10
-         /opt/sas/grid/config/Lev1/ObjectSpawner/ObjectSpawner.sh start
       else
          echo "ERROR: SAS Grid Server Configuration has failed. Please check logs"
          exit 1
