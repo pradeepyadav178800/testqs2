@@ -32,7 +32,7 @@ fi
 
 cat << EOF > $environmentLocation
 azure_storage_account=$1
-azure_storage_files_password=$2
+stgacc_secr_name=$2
 azure_storage_files_share=$3
 viyarepo_folder=$4
 app_name=$5
@@ -59,7 +59,6 @@ azure_storage_account=`facter azure_storage_account`
 cifs_server_fqdn="${azure_storage_account}.file.core.windows.net"
 azure_storage_files_share=`facter azure_storage_files_share`
 DIRECTORY_NFS_SHARE="sasdepot"
-azure_storage_files_password=`facter azure_storage_files_password`
 sas_home="/sas/install"
 key_vault_name=`facter kv_vault_name`
 secret_pvt_keyname=`facter secret_pvt_keyname`
@@ -138,6 +137,10 @@ if [ $? -eq 0 ]; then
 else
     echo "Hostname Update failed"
 fi
+az login --identity
+fail_if_error $? "ERROR:Az login Failed."
+stgacc_secr_name=`facter stgacc_secr_name`
+azure_storage_files_password=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 
 #Mounting File Share for SAS Viya Installation
 echo "setup cifs"
@@ -162,12 +165,8 @@ echo -e y | ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ""
 fail_if_error $? "ERROR: Key generation failed."
 
 ## Uploading the keys to key vault
-az login --identity
-fail_if_error $? "ERROR:Az login Failed."
-
 az keyvault secret set -n ${secret_pub_keyname} --value "`cat ~/.ssh/id_rsa.pub`" --vault-name ${key_vault_name}
 fail_if_error $? "ERROR:Key Vault, Public Key Upload Failed."
-
 
 az keyvault secret set -n ${secret_pvt_keyname} --value "`cat ~/.ssh/id_rsa`" --vault-name ${key_vault_name}
 fail_if_error $? "ERROR: Key Vault, Private Key Upload Failed."

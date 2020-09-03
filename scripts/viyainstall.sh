@@ -8,7 +8,7 @@ app_name=`facter app_name`
 domain_name=`facter domain_name`
 microservices_vm_name=`facter microservices_vmname`
 microservice_host=$app_name$microservices_vm_name.$domain_name
-user=root
+user=`whoami`
 spre_vm_name=`facter spre_vmname`
 spre_host=$app_name$spre_vm_name.$domain_name
 cascontroller_vm_name=`facter cascontroller_vmname`
@@ -95,7 +95,7 @@ done
 sed -i "/\[sas_casserver_primary\]/{n;s/.*/$cascontroller_vm_name/}" $inventory
 sed -i "/\[sas_casserver_worker\]/r caswork.txt" $inventory
 sed -i "/\[ComputeServer\]/{n;s/.*/$spre_vm_name/}" $inventory
-#sed -i "/\[ComputeServices\]/{n;s/.*/$spre_vm_name/}" $inventory
+sed -i "/\[Operations\]/{n;s/.*/$spre_vm_name/}" $inventory
 sed -i "/\[programming\]/{n;s/.*/$spre_vm_name/}" $inventory
 
 #Only for internal purpose(corecompete)
@@ -162,5 +162,5 @@ echo `ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -
 sasboot=`ssh -o StrictHostKeyChecking=no $app_name$microservices_vm_name "grep -H -r "sasboot" /var/log/sas/viya/saslogon/default/sas-saslogon*  | sed 's/.*code=//'"`
 echo "{'SAS_BOOT': '$sasboot'}" > /var/log/sas/install/sasboot.log
 echo "#SASBOOT#"
-cat /var/log/sas/install/sasboot.log
+cat /var/log/sas/install/sasboot.log 
 fi

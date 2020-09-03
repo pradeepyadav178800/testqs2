@@ -40,7 +40,7 @@ grid_name=${14}
 sas_sid=${15}
 grid_sid=${16}
 lsf_sid=${17}
-store_key=${18}
+stgacc_secr_name=${18}
 sas_role=${19}
 artifact_loc=${20}
 grid_nodes=${21}
@@ -74,7 +74,7 @@ sas_role=`facter sas_role`
 depot_loc=`facter sasdepot_folder`
 store_name=`facter storage_account_name`
 store_loc=`facter file_share_name`
-store_key=`facter store_key` 
+stgacc_secr_name=`facter stgacc_secr_name` 
 sasinst_secret_name=`facter sasinst_secret_name`
 sasext_secret_name=`facter sasext_secret_name`
 key_vault_name=`facter key_vault_name`
@@ -230,6 +230,10 @@ if [ $sas_role == "grid" ] || [ $sas_role == "gridnode" ]; then
 	   echo "SASData disk not avilable on this machine."
    fi
 fi
+
+az login --identity
+fail_if_error $? "Error: AZ login failed"
+store_key=`az keyvault secret show -n $stgacc_secr_name --vault-name $key_vault_name | grep value | cut -d '"' -f4`
 
 ## Create mount point for mounting the sasdepot
 if [ ! -d "/sasdepot" ]; then

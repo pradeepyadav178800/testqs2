@@ -3,7 +3,6 @@ set -x
 
 echo "*** Phase 2 - Viya-ARK Script Started at `date +'%Y-%m-%d_%H-%M-%S'` ***"
 
-
 ## Functions
 fail_if_error() {
   [ $1 != 0 ] && {
