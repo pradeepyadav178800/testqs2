@@ -259,8 +259,6 @@ openssl pkcs12 -export -out ${ssl_path}/${server_cn}.pfx -inkey ${ssl_path}/$Ser
 fail_if_error_phrase $?
 
 # Az Login Identity
-az login --identity
-fail_if_error_phrase $?
 az keyvault certificate import --file $ssl_path/${server_cn}.pfx --name $cert_name --vault-name $key_vault_name
 
 echo "*** Phase 1 Completed - Ansible Startup Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
