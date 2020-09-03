@@ -38,10 +38,6 @@ inst_prop=$res_dir/grid_install.properties
 conf_prop=$res_dir/grid_config.properties
 sas_resource_dir=/opt/sas/resources
 
-az login --identity
-fail_if_error $? "Error: AZ login failed"
-echo `az keyvault secret show -n ${pub_keyname}  --vault-name ${key_vault_name} | grep value | cut -d '"' -f4` >> ~/.ssh/authorized_keys
-fail_if_error $? "Error: Key vault access failed"
 
 ## Creating the directory structure
 if [ -d $sas_resource_dir ]; then
