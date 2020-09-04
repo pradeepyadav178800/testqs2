@@ -89,7 +89,7 @@ fail_if_error $? "Error: LSF hostsetup utility failed"
 
 if [ ! -f /etc/lsf.sudoers ]; then
    echo "LSF_STARTUP_PATH=$LSFInstallLoc/$LSFBinDir/linux2.6-glibc2.3-x86_64/etc" >> /etc/lsf.sudoers
-   echo 'LSF_STARTUP_USERS="sasinst lsfadmin"' >> /etc/lsf.sudoers
+   echo 'LSF_STARTUP_USERS="sasinst"' >> /etc/lsf.sudoers
 fi
 
 echo "*** Phase 2 - PSS installation Script Ended at `date +'%Y-%m-%d_%H-%M-%S'` ***"
