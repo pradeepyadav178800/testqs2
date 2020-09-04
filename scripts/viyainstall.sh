@@ -20,6 +20,8 @@ ansible_directory="/sas/install"
 playbook_directory="$ansible_directory/sas_viya_playbook"
 inventory="$playbook_directory/inventory.ini"
 viyarepo_loc=`facter viyarepo_folder`
+artifact_loc=`facter artifact_loc`
+viya_ark_uri=${artifact_loc}viya-ark.tar.gz
 
 if [[ -z "$SCRIPT_PHASE" ]]; then
         SCRIPT_PHASE="$1"
@@ -50,11 +52,9 @@ if [[ "$SCRIPT_PHASE" -eq 1 ]]; then
 #
 ##altering Ansible Config
 sed -i '/action_plugins/a host_key_checking = False' $playbook_directory/ansible.cfg
-
 #
 ##Altering the Vars file 
 #
-
 sed -i "s~#CAS_DISK_CACHE~CAS_DISK_CACHE~" $playbook_directory/vars.yml
 sed -i "s~/tmp~/cascache~" $playbook_directory/vars.yml
 sed -i "/#CAS_VIRTUAL_PORT/ a newline" $playbook_directory/vars.yml
@@ -134,7 +134,8 @@ elif [[ "$SCRIPT_PHASE" -eq 3 ]]; then
         cd $playbook_directory && ansible-playbook site.yml -i inventory.ini -vvv
 
 elif [[ "$SCRIPT_PHASE" -eq 4 ]]; then
-
+        wget $viya_ark_uri
+        tar -xzvf viya-ark.tar.gz -C $playbook_directory
         ssh -tT $user@${spre_host} << EOF
 echo "export SASMAKEHOMEDIR=1"     >> /opt/sas/viya/config/etc/spawner/default/spawner_usermods.sh
 echo "export SASHOMEDIRPERMS=0700" >> /opt/sas/viya/config/etc/spawner/default/spawner_usermods.sh
