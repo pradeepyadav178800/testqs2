@@ -1,5 +1,5 @@
 #!/bin/bash
-## OSS Node Install Script
+## OSS Node Install Script!!
 
 mkdir -p /logs
 log_file="/logs/phase3-`date +'%Y-%m-%d_%H-%M-%S'`.log"
