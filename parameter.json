@@ -1,0 +1,111 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "SAS Application Name": {
+      "value": "gvd"
+    },
+    "Admin Ingress Location": {
+      "value": "115.98.54.15"
+    },
+    "Vnet Address CIDR": {
+      "value": "10.10.0.0/16"
+    },
+    "Ansible-Bastion PublicSubnet CIDR": {
+      "value": "10.10.1.0/24"
+    },
+    "SAS94 PrivateSubnet CIDR": {
+      "value": "10.10.2.0/24"
+    },
+    "SAS94 Meta VM Size": {
+      "value": "Standard_D4s_v3"
+    },
+    "SAS94 Mid VM Size": {
+      "value": "Standard_E4s_v3"
+    },
+    "SAS94 Grid VM Size": {
+      "value": "Standard_E4s_v3"
+    },
+    "SAS94 Grid Node VM Size": {
+      "value": "Standard_D4s_v3"
+    },
+    "Number of SAS94 Grid Nodes": {
+      "value": 1
+    },
+    "SAS External Password": {
+      "value": "Core@123456789"
+    },
+    "SAS Internal Password": {
+      "value": "Core@123456789"
+    },
+    "Lustre PrivateSubnet CIDR": {
+      "value": "10.10.3.0/24"
+    },
+    "Lustre OSS Node VM Size": {
+      "value": "Standard_E8s_v3"
+    },
+    "Number of Lustre OSS Nodes": {
+      "value": 2
+    },
+    "SAS94 Lustre Data Storage": {
+      "value": 1000
+    },
+    "Viya PrivateSubnet CIDR": {
+      "value": "10.10.4.0/24"
+    },
+    "Viya Microservices VM Size": {
+      "value": "Standard_E16s_v3"
+    },
+    "Viya SPRE VM Size": {
+      "value": "Standard_E4s_v3"
+    },
+    "Viya CAS Controller VM Size": {
+      "value": "Standard_D4s_v3"
+    },
+    "Viya CAS Worker VM Size": {
+      "value": "Standard_D4s_v3"
+    },
+    "Number Of Viya CAS Nodes": {
+      "value": 1
+    },
+    "SAS Viya Data Storage": {
+      "value": 100
+    },
+    "Storage Account Name": {
+      "value": "ccsasus"
+    },
+    "Storage Account Key": {
+      "value": "eIYH9oRj++CXdjWK0IS2pmAIx1aMoQA6GNmeNF4HJbvQHnnaKAZdjVuEfjdCpKCK8jMuROtRxPBnpLoaU5uAXQ=="
+    },
+    "File Share Name": {
+      "value": "sasrepo"
+    },
+    "SASDepot Folder": {
+      "value": "sasdepot"
+    },
+    "Viyarepo Folder": {
+      "value": "viyarepo"
+    },
+    "SAS94 Server license file": {
+      "value": "SAS94_9CCPHL_70154202_LINUX_X86-64.txt"
+    },
+    "SAS94 Grid license file": {
+      "value": "SAS94_9CCPHL_70260557_LINUX_X86-64.txt"
+    },
+    "SAS LSF license file": {
+      "value": "LSF94_9CCPHL_70260557_LINUX_X86-64.txt"
+    },
+    "SSHPublicKey": {
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKNce4VNb5lHy5MT+VI98nG6PFZYJkfcJ1+XZacwBwWOuqBwiOUZ3QPSmfoHoc5rHmo3N2LVRrjZDYxXzEeOwn56QFSoJUclFhZOeJk76P7Ayr2DR1SfexXoCzf51bB72Ogvtb250lt9ir6P1+lm9hKlks+IxDpD6OZNhO83Q+Ij8prxUU82jJs8FjKcjXwr6j4BXJSrSlvGbeX75YTAU3rjtD62F/96nFsMjQ3x7PKEAqZRVGKquag8RMLpbvm8nt0LVhX9WcFel9dTYlFHmZGJr7s0L9Mpdww2/nP9ryjt5fUavAiwe6lX2C5rFNqlxKlbvM9GneeLimKrzD/1ZT pradeep.yadav@corecompete.com"
+    },
+    "KeyVault Owner ID": {
+      "value": "f0d88960-97f2-43ed-9892-d8d1bfc58652"
+    },
+    "Location": {
+      "value": "[resourceGroup().location]"
+    },
+    "_artifactsLocation": {
+      "value": "https://raw.githubusercontent.com/cc-mkotrike/testqs2/develop_new/"
+    }
+  }
+}
